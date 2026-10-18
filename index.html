@@ -169,8 +169,15 @@ const questions = [
  {id:"c3",topic:"Логика",level:3,kind:"text",q:"Сколько существует двоичных наборов (A, B, C), при которых выражение A И НЕ B истинно?",body:"Введи только число.",a:"4",why:"A = 1, B = 0, C может быть 0 или 1 — два варианта; всего 2 × 2 = 4."}
 ];
 let phase="diagnostic", pool=[], index=0, answers=[], current=null, selected=null, checked=false, authMode="login";
-let user = JSON.parse(localStorage.getItem("infotrack_user")||"null");
-let users = JSON.parse(localStorage.getItem("infotrack_demo_users")||"{}");
+let user = null;
+let users = {};
+
+try {
+  user = JSON.parse(localStorage.getItem("infotrack_user") || "null");
+  users = JSON.parse(localStorage.getItem("infotrack_demo_users") || "{}");
+} catch (error) {
+  console.error("Ошибка чтения сохранённых данных:", error);
+}
 const difficulty = n => ["Базовый","Средний","Продвинутый"][Math.max(0,Math.min(2,n-1))];
 function show(id){["home","quiz","results","auth"].forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo({top:0,behavior:"smooth"});}
 function toast(msg){$("toast").textContent=msg;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),2600);}
