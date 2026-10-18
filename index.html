@@ -244,7 +244,7 @@ function showResults(){
  const byTopic={};answers.forEach(a=>{if(!byTopic[a.q.topic])byTopic[a.q.topic]={n:0,r:0};byTopic[a.q.topic].n++;if(a.correct)byTopic[a.q.topic].r++;});
  $("topicResults").innerHTML=Object.entries(byTopic).map(([t,v])=>`<div class="topic-result"><span>${t}</span><strong>${v.r}/${v.n}</strong></div>`).join("");
  let weakest=Object.entries(byTopic).sort((a,b)=>a[1].r/a[1].n-b[1].r/b[1].n)[0];
- $("recommendation").innerHTML=weakest?`<p>В первую очередь повтори тему <b>${weakest[0]}</b>.</p><p class="sub">В ней правильных ответов: ${weakest[1].r} из ${weakest[1].n}.</p>`:"<p class="sub">У тебя хороший уровень — можно двигаться дальше.</p>";
+ $("recommendation").innerHTML=weakest?`<p>В первую очередь повтори тему <b>${weakest[0]}</b>.</p><p class="sub">В ней правильных ответов: ${weakest[1].r} из ${weakest[1].n}.</p>`:'<p class="sub">У тебя хороший уровень — можно двигаться дальше.</p>;
  $("reviewList").innerHTML=answers.map((a,i)=>`<article class="review-item"><h3>${i+1}. ${a.q.q}</h3><div class="q-meta"><span class="tag">${a.q.topic}</span><span class="tag">${difficulty(a.q.level)}</span></div><div class="user-answer">Твой ответ: ${escapeHtml(String(a.answer))}</div><div class="solution"><strong>Правильный ответ:</strong> ${escapeHtml(Array.isArray(a.q.a)?a.q.a.join(" / "):String(a.q.a))}. ${escapeHtml(a.q.why || "")}</div></article>`).join("");
  if(user){let history=JSON.parse(localStorage.getItem("infotrack_history")||"[]");history.push({date:new Date().toISOString(),score:correct,total,byTopic});localStorage.setItem("infotrack_history",JSON.stringify(history));}
 }
